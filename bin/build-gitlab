@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if test -z "$DSR_BIN_PATH"; then
+  export DSR_BIN_PATH="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
+
+if test -z "$DSR_HOME_PATH"; then
+  export DSR_HOME_PATH=$(dirname $DSR_BIN_PATH)
+fi
+
+echo "Building docker image ..."
+echo "home path     : $DSR_HOME_PATH"
+echo "bin directory : $DSR_BIN_PATH"
+
+DOCKERFILE_PATH=$DSR_HOME_PATH/docker-images/gitlab
+echo "gitlab directory : $DSR_BIN_PATH"
+
+docker build --force-rm --tag=interware/gitlab:11.9.0 $DOCKERFILE_PATH

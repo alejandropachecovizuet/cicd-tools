@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+  gitlab:
+    image: interware/gitlab:11.9.0
+    container_name: gitlab
+    ports:
+      - "9080:80"
+      - "9443:443"
+      - "9022:22"
+    volumes:
+      - ./gitlab/config:/etc/gitlab
+      - ./gitlab/data:/var/opt/gitlab
+      - ./gitlab/log:/var/log/gitlab
+    restart: always
+    networks:
+      - cicd_interware
+
+  nexus:
+    image: interware/nexus3:3.15.2
+    container_name: nexus
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./nexus/data:/nexus-data
+    restart: always
+    networks:
+      - cicd_interware
+
+  sonarqube:
+    image: interware/sonarqube:7.7
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./sonarqube/config:/opt/sonarqube/conf
+      - ./sonarqube/data:/opt/sonarqube/data
+      - ./sonarqube/log:/opt/sonarqube/logs
+      - ./sonarqube/ext:/opt/sonarqube/extensions
+    restart: always
+    networks:
+      - cicd_interware
+
+  jenkins:
+    image: interware/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins/data:/var/jenkins_home
+      - ./jenkins/log:/var/log/jenkins
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    networks:
+      - cicd_interware
+    links:
+      - gitlab
+      - nexus
+      - sonarqube
+
+networks:
+  cicd_interware: {}

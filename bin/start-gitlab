@@ -1,0 +1,47 @@
+#!/bin/bash
+
+if test -z "$DSR_BIN_PATH"; then
+  export DSR_BIN_PATH="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
+
+if test -z "$DSR_HOME_PATH"; then
+  export DSR_HOME_PATH=$(dirname $DSR_BIN_PATH)
+fi
+
+echo "Starting Gitlab service ..."
+echo "home directory : $DSR_HOME_PATH"
+echo "bin directory  : $DSR_BIN_PATH"
+
+GITLAB_DATA_PATH=$DSR_HOME_PATH/docker-compose/gitlab/data
+GITLAB_LOG_PATH=$DSR_HOME_PATH/docker-compose/gitlab/log
+GITLAB_CONFIG_PATH=$DSR_HOME_PATH/docker-compose/gitlab/config
+
+if [ ! -d "$GITLAB_DATA_PATH" ]; then
+  echo "Creating Gitlab data directory   : $GITLAB_DATA_PATH ..."
+  mkdir -p $GITLAB_DATA_PATH
+fi
+
+if [ ! -d "$GITLAB_LOG_PATH" ]; then
+  echo "Creating Gitlab log directory    : $GITLAB_LOG_PATH ..."
+  mkdir -p $GITLAB_LOG_PATH
+fi
+
+if [ ! -d "$GITLAB_CONFIG_PATH" ]; then
+  echo "Creating Gitlab config directory    : $GITLAB_CONFIG_PATH ..."
+  mkdir -p $GITLAB_CONFIG_PATH
+fi
+
+echo "Starting docker container ..."
+docker run --detach \
+  --hostname gitlab.interware.mx \
+  --publish 9443:443 \
+  --publish 9080:80 \
+  --publish 9022:22 \
+  --name gitlab \
+  --restart always \
+  --volume $GITLAB_CONFIG_PATH:/etc/gitlab \
+  --volume $GITLAB_LOG_PATH:/var/log/gitlab \
+  --volume $GITLAB_DATA_PATH:/var/opt/gitlab \
+  interware/gitlab:11.9.0
+
+echo ""

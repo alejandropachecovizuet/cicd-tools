@@ -1,0 +1,71 @@
+#!/bin/bash
+
+if [ -z "$1" ] ; then
+  echo "No suffix supplied"
+  export COMPOSE_SUFFIX=""  
+else
+  export COMPOSE_SUFFIX="_$1"
+fi
+
+if [ -z "$2" ] ; then
+  echo "No SonarQube port supplied"
+  export SONARQUBE_PORT=9000  
+else
+  export SONARQUBE_PORT=$2
+fi
+
+if test -z "$DSR_BIN_PATH"; then
+  export DSR_BIN_PATH="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
+
+if test -z "$DSR_HOME_PATH"; then
+  export DSR_HOME_PATH=$(dirname $DSR_BIN_PATH)
+fi
+
+echo "Suffix             : $COMPOSE_SUFFIX"
+echo "SonarQube port     : $SONARQUBE_PORT"
+
+echo "Starting SonarQube service ..."
+echo "home directory : $DSR_HOME_PATH"
+echo "bin directory  : $DSR_BIN_PATH"
+
+SONARQUBE_CONFIG_PATH=$DSR_HOME_PATH/docker-compose$COMPOSE_SUFFIX/sonarqube/config
+SONARQUBE_DATA_PATH=$DSR_HOME_PATH/docker-compose$COMPOSE_SUFFIX/sonarqube/data
+SONARQUBE_LOG_PATH=$DSR_HOME_PATH/docker-compose$COMPOSE_SUFFIX/sonarqube/log
+SONARQUBE_EXT_PATH=$DSR_HOME_PATH/docker-compose$COMPOSE_SUFFIX/sonarqube/ext
+
+if [ ! -d "$SONARQUBE_CONFIG_PATH" ]; then
+  echo "Creating SonarQube configuration directory   : $SONARQUBE_CONFIG_PATH ..."
+  mkdir -p $SONARQUBE_CONFIG_PATH
+  sudo chown -R 999:999 $SONARQUBE_CONFIG_PATH
+fi
+
+if [ ! -d "$SONARQUBE_DATA_PATH" ]; then
+  echo "Creating SonarQube data directory   : $SONARQUBE_DATA_PATH ..."
+  mkdir -p $SONARQUBE_DATA_PATH
+  sudo chown -R 999:999 $SONARQUBE_DATA_PATH
+fi
+
+if [ ! -d "$SONARQUBE_LOG_PATH" ]; then
+  echo "Creating SonarQube log directory   : $SONARQUBE_LOG_PATH ..."
+  mkdir -p $SONARQUBE_LOG_PATH
+  sudo chown -R 999:999 $SONARQUBE_LOG_PATH
+fi
+
+if [ ! -d "$SONARQUBE_EXT_PATH" ]; then
+  echo "Creating SonarQube extensions directory   : $SONARQUBE_EXT_PATH ..."
+  mkdir -p $SONARQUBE_EXT_PATH
+  sudo chown -R 999:999 $SONARQUBE_EXT_PATH
+fi
+
+echo "Starting docker container ..."
+docker run --detach \
+  --name sonarqube \
+  --publish $SONARQUBE_PORT:9000 \
+  --volume $SONARQUBE_CONFIG_PATH:/opt/sonarqube/conf \
+  --volume $SONARQUBE_DATA_PATH:/opt/sonarqube/data \
+  --volume $SONARQUBE_LOG_PATH:/opt/sonarqube/logs \
+  --volume $SONARQUBE_EXT_PATH:/opt/sonarqube/extensions \
+  interware/sonarqube:7.7
+
+echo ""

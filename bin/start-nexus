@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if test -z "$DSR_BIN_PATH"; then
+  export DSR_BIN_PATH="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
+
+if test -z "$DSR_HOME_PATH"; then
+  export DSR_HOME_PATH=$(dirname $DSR_BIN_PATH)
+fi
+
+echo "Starting Nexus service ..."
+echo "home directory : $DSR_HOME_PATH"
+echo "bin directory  : $DSR_BIN_PATH"
+
+NEXUS_DATA_PATH=$DSR_HOME_PATH/docker-compose/nexus/data
+
+if [ ! -d "$NEXUS_DATA_PATH" ]; then
+  echo "Creating Nexus data directory   : $NEXUS_DATA_PATH ..."
+  mkdir -p $NEXUS_DATA_PATH
+  sudo chown -R 200 $NEXUS_DATA_PATH
+fi
+
+echo "Starting docker container ..."
+docker run \
+  --name=nexus \
+  --detach \
+  --publish 8081:8081 \
+  --restart always \
+  --volume $NEXUS_DATA_PATH:/nexus-data \
+  interware/nexus3:3.15.2
+
+echo ""
