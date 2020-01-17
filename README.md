@@ -298,26 +298,27 @@ credentialsId: 'ssh-host', \
 ```
 hostKeyChecking: false, \
 ```
-* Usuarios/Paswords
-** Jenkins
+## Usuarios/Paswords
+
+* Jenkins
 ```
 Username : *jenkinsadmin*
 Password : *admin*
 ```
 
-** Sonar
+* Sonar
 ```
 Username : *admin*
 Password : *admin*
 ```
 
-** Nexus
+* Nexus
 ```
 Username: *admin*
 Password: *admin123*
 ```
 
-** Gitlab
+* Gitlab
 ```
 Username : *root*
 Password : *!1nt3rw4r3#*
