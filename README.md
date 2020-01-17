@@ -302,30 +302,30 @@ hostKeyChecking: false, \
 
 * Jenkins
 ```
-Username : *jenkinsadmin*
-Password : *admin*
+Username : jenkinsadmin
+Password : admin
 ```
 
 * Sonar
 ```
-Username : *admin*
-Password : *admin*
+Username : admin
+Password : admin
 ```
 
 * Nexus
 ```
-Username: *admin*
-Password: *admin123*
+Username: admin
+Password: admin123
 ```
 
 * Gitlab
 ```
-Username : *root*
-Password : *!1nt3rw4r3#*
+Username : root
+Password : !1nt3rw4r3#
 ```
 
 ```
-Username : *interware*
-Password : *!1nt3rw4r3#*
+Username : interware
+Password : !1nt3rw4r3#
 ```
 
