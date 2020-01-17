@@ -315,7 +315,7 @@ Password : admin
 * Nexus
 ```
 Username: admin
-Password: admin123
+Password: !1nt3rw4r3#
 ```
 
 * Gitlab
