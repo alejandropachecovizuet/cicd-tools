@@ -137,7 +137,7 @@ Password: *admin123*
 docker-compose down
 docker-compose up
 ```
-* Acceder a *http://sonarqube.interware.mx:8080*
+* Acceder a *http://sonarqube.interware.mx:9000*
 
 * Crear el proyecto cicd-demo, entrando a *Projects > Create new project* usando los datos:
 Project key: *cicd-demo*
