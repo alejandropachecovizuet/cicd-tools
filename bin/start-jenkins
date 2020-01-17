@@ -60,7 +60,7 @@ docker run \
   --volume $JENKINS_DATA_PATH:/var/jenkins_home \
   --volume $JENKINS_LOG_PATH:/var/log/jenkins \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  interware/jenkins:2.168
+  interware/jenkins:lts
 
 echo "Getting intial administrator password ..."
 sleep 10s
