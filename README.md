@@ -230,7 +230,9 @@ docker exec -u 0 -it jenkins bash
 
 * Ejecutar la siguiente sentencia cada vez que se reinicie docker-compose
 ```
+su -
 echo "$(ip route show | awk '/default/ {print $3}') kubehost" >> /etc/hosts
+exit
 ```
 
 * En el Host ejecutar los siguientes comandos*
@@ -243,6 +245,7 @@ cd /etc/docker
 ```
 vi daemon.json
 { "insecure-registries":["dockerhub:5000"] }
+exit
 ```
 
 * Detener docker-compose
