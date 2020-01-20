@@ -292,6 +292,19 @@ ssh [USUARIO_HOST]@kubehost
 ```
 
 * Modificar los datos del archivo Jenkinsfile del proyecto que se subio al gitlab local
+git clone http://gitlab.interware.mx:9080/devops/cicd-demo
+usuario:interware
+password:!1nt3rw4r3#
+
+Descomprimir zip de la memoria (cicd-demo.zip) en maquina local:
+
+cp -R [ruta_carpeta_cicd-demo]/* [carpeta_donde_se hizo el git clone]/
+cd [carpeta_donde_se hizo el git clone]
+git status
+git add . -A
+git commit -m "Mi primer commit"
+git checkout develop
+git push origin develop
 
 * En la parte de stage('Deploy') realizar las siguientes modificaciones*
 ```
