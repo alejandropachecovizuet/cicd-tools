@@ -299,12 +299,13 @@ password:!1nt3rw4r3#
 
 Descomprimir zip de la memoria (cicd-demo.zip) en maquina local:
 
-cp -R [ruta_carpeta_cicd-demo]/* [carpeta_donde_se hizo el git clone]/
+cd [carpeta_donde_se hizo el git clone]/cicd-demo/
+git checkout develop
+cp -R [ruta_carpeta_cicd-demo]/* [carpeta_donde_se hizo el git clone]/cicd-demo/
 cd [carpeta_donde_se hizo el git clone]
 git status
 git add . -A
 git commit -m "Mi primer commit"
-git checkout develop
 git push origin develop
 ```
 
