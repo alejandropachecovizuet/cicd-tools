@@ -291,7 +291,8 @@ chmod 400 id_rsa.pub
 ssh [USUARIO_HOST]@kubehost
 ```
 
-* Modificar los datos del archivo Jenkinsfile del proyecto que se subio al gitlab local
+* Subir primer version de la aplicaciona al git
+```
 git clone http://gitlab.interware.mx:9080/devops/cicd-demo
 usuario:interware
 password:!1nt3rw4r3#
@@ -305,7 +306,9 @@ git add . -A
 git commit -m "Mi primer commit"
 git checkout develop
 git push origin develop
+```
 
+* Modificar los datos del archivo Jenkinsfile del proyecto que se subio al gitlab local
 * En la parte de stage('Deploy') realizar las siguientes modificaciones*
 ```
 becomeUser: *'[USUARIO_SSH_HOST]'*, \
