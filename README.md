@@ -263,6 +263,8 @@ sudo /etc/init.d/docker restart
 * Ingresar a la ruta
 ```
 cd [rutaInicial]/cicd-tools/docker-images/jenkins
+mkdir ~/.ssh
+mkdir ../../docker-compose/jenkins/data/.ssh
 cat id_rsa.pub >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 ```
